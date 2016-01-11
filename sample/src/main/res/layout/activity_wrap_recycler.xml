@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
+    android:background="@color/colorAccent"
     android:fitsSystemWindows="true">
 
     <com.cjj.MaterialRefreshLayout
@@ -13,6 +14,7 @@
         app:overlay="true"
         app:wave_show="true"
         app:wave_color="#90ffffff"
+        android:background="#ffffff"
         app:progress_colors="@array/material_colors"
         app:wave_height_type="higher">
 
