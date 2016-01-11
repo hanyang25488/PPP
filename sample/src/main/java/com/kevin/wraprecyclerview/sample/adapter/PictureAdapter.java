@@ -83,4 +83,5 @@ public class PictureAdapter extends BaseRecyclerAdapter<PictureData.Picture, Pic
         }
     }
 
+
 }

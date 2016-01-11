@@ -2,6 +2,7 @@ package com.kevin.wraprecyclerview.sample.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -86,13 +87,13 @@ public class WarpRecyclerViewActivity extends AppCompatActivity {
         mWrapRecyclerView.setAdapter(mAdapter);
         // 获取包装类适配器，因为要用它去刷新数据
         mWrapAdapter = mWrapRecyclerView.getAdapter();
-        initData();
         mAdapter.setOnRecyclerViewListener(new BaseRecyclerAdapter.OnRecyclerViewListener() {
             @Override
             public void onItemClick(View view, int position) {
                 if (list.size() > 0) {
 
                     Log.e("ppp", position + "");
+                    Log.e("ppp", allList.get(position).IMAGE_URL + "");
                     Intent intent = new Intent(WarpRecyclerViewActivity.this, SpaceImageDetailActivity.class);
                     intent.putExtra("images", (Serializable) allList.get(position));
                     intent.putExtra("position", position);
@@ -121,16 +122,17 @@ public class WarpRecyclerViewActivity extends AppCompatActivity {
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
                 Log.e("ref", "ref");
                 initData();
-                layout.finishRefresh();
+
             }
 
             @Override
             public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
                 Log.e("more", "more");
                 ref();
-                layout.finishRefreshLoadMore();
+
             }
         });
+        initData();
     }
 
     @Override
@@ -166,12 +168,14 @@ public class WarpRecyclerViewActivity extends AppCompatActivity {
                 String response = responseInfo.result;
                 pictureData = JsonTool.toBean(response, PictureData.class);
                 allList = (ArrayList<PictureData.Picture>) pictureData.list;
-                for (int i = 0; i <10; i++) {
+                for (int i = 0; i < 10; i++) {
                     list.add(pictureData.list.get(i));
                     Log.e("P", i + "");
                 }
+                mAdapter.clear();
                 mAdapter.setItemLists(list); // 数据适配器设置数据
                 mWrapAdapter.notifyDataSetChanged();// 包装类适配器刷新数据
+                layout.finishRefresh();
                 dialog.dismiss();
             }
 
@@ -186,17 +190,34 @@ public class WarpRecyclerViewActivity extends AppCompatActivity {
     }
 
     private void ref() {
-        if (j <= allList.size()) {
-            for (int i = 0; i <= 10; i++) {
-                list.add(allList.get(i + j));
-                Log.e("P", i + j + "");
-                mAdapter.setItemLists(list); // 数据适配器设置数据
-                mWrapAdapter.notifyDataSetChanged();// 包装类适配器刷新数据
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
             }
-        } else {
-            Toast.makeText(WarpRecyclerViewActivity.this, "到底了!,骚年~", Toast.LENGTH_SHORT).show();
-        }
-        j = j + 11;
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                if (j < allList.size()) {
+                    for (int i = 0; i <= 10; i++) {
+                        list.add(allList.get(i + j));
+                        Log.e("P", i + j + "");
+                        mAdapter.setItemLists(list); // 数据适配器设置数据
+                        mWrapAdapter.notifyDataSetChanged();// 包装类适配器刷新数据
+                    }
+                } else {
+                    Toast.makeText(WarpRecyclerViewActivity.this, "到底了!,骚年~", Toast.LENGTH_SHORT).show();
+                }
+                j = j + 11;
+                layout.finishRefreshLoadMore();
+            }
+        }.execute();
+
     }
 
     /**
