@@ -1,0 +1,28 @@
+{
+    "items": [
+        {
+            "id": "0",
+            "descText": "first",
+            "imgUrl": "https://raw.githubusercontent.com/xuehuayous/WrapRecyclerView/master/sample/picture/loopview_0.jpg",
+            "link":"https://github.com/xuehuayous/WrapRecyclerView"
+        },
+        {
+            "id": "1",
+            "descText": "second",
+            "imgUrl": "https://raw.githubusercontent.com/xuehuayous/WrapRecyclerView/master/sample/picture/loopview_1.jpg",
+            "link":"https://github.com/xuehuayous/WrapRecyclerView"
+        },
+        {
+            "id": "2",
+            "descText": "third",
+            "imgUrl": "https://raw.githubusercontent.com/xuehuayous/WrapRecyclerView/master/sample/picture/loopview_2.jpg",
+            "link":"https://github.com/xuehuayous/WrapRecyclerView"
+        },
+        {
+            "id": "3",
+            "descText": "fourth",
+            "imgUrl": "https://raw.githubusercontent.com/xuehuayous/WrapRecyclerView/master/sample/picture/loopview_3.jpg",
+            "link":"https://github.com/xuehuayous/WrapRecyclerView"
+        }
+    ]
+}
