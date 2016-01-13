@@ -9,7 +9,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
     }
     buildTypes {
         release {
@@ -36,4 +36,5 @@ dependencies {
     compile files('universal-image-loader-1.9.0.jar')
     compile 'com.cjj.materialrefeshlayout:library:1.3.0'
     compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
+
 }

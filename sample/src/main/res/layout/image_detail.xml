@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -12,26 +14,31 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="52dp"
         android:layout_alignParentBottom="true"
-        android:background="#cccccc"
+        android:background="@color/ttt"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="5dp"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="喜欢请点赞→→→"
-            android:textColor="@color/colorPrimary"
-            />
-        <com.gc.materialdesign.views.CheckBox
-            android:id="@+id/checkboxs"
-            android:layout_width="60dp"
-            android:layout_height="60dp" />
 
-    </LinearLayout>
+        <com.kevin.wraprecyclerview.sample.progressbutton.CircularProgressButton
+            android:id="@+id/buttonflat_set"
+            android:layout_marginLeft="7dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_centerHorizontal="true"
+            app:cornerRadius="48dp"
+            app:iconComplete="@drawable/ic_action_accept"
+            app:iconError="@drawable/ic_action_cancel"
+            app:textIdle="设为壁纸" />
+
+    </RelativeLayout>
 </RelativeLayout>

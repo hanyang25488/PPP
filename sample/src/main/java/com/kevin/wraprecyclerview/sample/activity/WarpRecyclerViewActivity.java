@@ -1,7 +1,9 @@
 package com.kevin.wraprecyclerview.sample.activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +21,8 @@ import android.widget.Toast;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
+import com.gc.materialdesign.widgets.Dialog;
+import com.gc.materialdesign.widgets.ProgressDialog;
 import com.kevin.jsontool.JsonTool;
 import com.kevin.loopview.AdLoopView;
 import com.kevin.wraprecyclerview.BaseRecyclerAdapter;
@@ -66,6 +70,7 @@ public class WarpRecyclerViewActivity extends AppCompatActivity {
             //透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
+        getVersion();
         refreshDate = getString(R.string.menu_refresh_data);
         addHeader = getString(R.string.menu_add_header);
         initViews();
@@ -153,7 +158,8 @@ public class WarpRecyclerViewActivity extends AppCompatActivity {
      * 初始化数据
      */
     private void initData() {
-        final ProgressDialog dialog = new ProgressDialog(this);
+        final ProgressDialog dialog = new ProgressDialog(this, "骚等...");
+
         HttpUtils httpUtils = new HttpUtils(60000);
 
         httpUtils.send(HttpRequest.HttpMethod.GET, "http://www.xdhtxt.com/DBANK/hello.html", new RequestCallBack<String>() {
@@ -255,4 +261,54 @@ public class WarpRecyclerViewActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    public void getVersion() {
+        try {
+            PackageManager packageManager = this.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(this.getPackageName(), 0);
+
+            getUpdateInfo(packageInfo.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void getUpdateInfo(final String verId) {
+        HttpUtils httpUtils = new HttpUtils();
+        httpUtils.send(HttpRequest.HttpMethod.GET, "升级接口", new RequestCallBack<String>() {
+
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                if (!verId.equals("")) {
+                    final Dialog dialog=new Dialog(WarpRecyclerViewActivity.this,"更新提示","有新版本咯");
+                    dialog.addCancelButton("No");
+                    dialog.show();
+                    dialog.setOnCancelButtonClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    dialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent();
+                            intent.setAction("android.intent.action.VIEW");
+                            Uri content_url = Uri.parse("path");
+                            intent.setData(content_url);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+//                Toast.makeText(WarpRecyclerViewActivity.this, "没网!,骚年~", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 }

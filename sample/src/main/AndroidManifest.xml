@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kevin.wraprecyclerview.sample">
+    package="com.kevin.wraprecyclerview.sample"
+    android:versionCode="1"
+    android:versionName="1.0.0"
+    >
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

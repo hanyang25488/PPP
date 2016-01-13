@@ -1,17 +1,23 @@
 package com.kevin.wraprecyclerview.sample.activity;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.WallpaperManager;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.gc.materialdesign.views.CheckBox;
 import com.kevin.wraprecyclerview.sample.R;
 import com.kevin.wraprecyclerview.sample.bean.PictureData;
+import com.kevin.wraprecyclerview.sample.progressbutton.CircularProgressButton;
 import com.kevin.wraprecyclerview.sample.utils.SmoothImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.io.IOException;
 
 
 public class SpaceImageDetailActivity extends Activity {
@@ -23,7 +29,7 @@ public class SpaceImageDetailActivity extends Activity {
     private int mWidth;
     private int mHeight;
     SmoothImageView imageView = null;
-    private CheckBox checkBox;
+    private CircularProgressButton buttonflat_set;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +44,7 @@ public class SpaceImageDetailActivity extends Activity {
 
         setContentView(R.layout.image_detail);
         imageView= (SmoothImageView) findViewById(R.id.imagesss);
-        checkBox= (CheckBox) findViewById(R.id.checkboxs);
+        buttonflat_set= (CircularProgressButton) findViewById(R.id.buttonflat_set);
         imageView.setOriginalInfo(mWidth, mHeight, mLocationX, mLocationY);
         imageView.transformIn();
         imageView.setLayoutParams(new RelativeLayout.LayoutParams(-1,-1));
@@ -56,15 +62,87 @@ public class SpaceImageDetailActivity extends Activity {
                 finish();
             }
         });
-        checkBox.setOncheckListener(new CheckBox.OnCheckListener() {
+        buttonflat_set.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheck(CheckBox view, boolean check) {
-                if (check) {
-                    Toast.makeText(SpaceImageDetailActivity.this, "已赞!,骚年~", Toast.LENGTH_SHORT).show();
-                }
+            public void onClick(View v) {
+                set();
             }
         });
     }
+
+
+    private void set(){
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                WallpaperManager wallpaperManager = WallpaperManager.getInstance(SpaceImageDetailActivity.this);
+                Bitmap bitmap= ImageLoader.getInstance().loadImageSync(mDatas.IMAGE_URL);
+                try
+                {
+                    wallpaperManager.setBitmap(bitmap);
+
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                if (buttonflat_set.getProgress() == 0) {
+                    simulateSuccessProgress(buttonflat_set);
+                } else {
+                    buttonflat_set.setProgress(0);
+                }
+
+            }
+        }.execute();
+    }
+
+
+
+    /**
+     * 成功
+     */
+    private void simulateSuccessProgress(final CircularProgressButton button) {
+        ValueAnimator widthAnimation = ValueAnimator.ofInt(1, 100);
+        widthAnimation.setDuration(1000);
+        widthAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        widthAnimation
+                .addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        Integer value = (Integer) animation.getAnimatedValue();
+                        button.setProgress(value);
+                    }
+                });
+        widthAnimation.start();
+    }
+
+    /**
+     * 失败
+     */
+    private void simulateErrorProgress(final CircularProgressButton button) {
+        ValueAnimator widthAnimation = ValueAnimator.ofInt(1, 99);
+        widthAnimation.setDuration(1500);
+        widthAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        widthAnimation
+                .addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        Integer value = (Integer) animation.getAnimatedValue();
+                        button.setProgress(value);
+                        if (value == 99) {
+                            button.setProgress(-1);
+                        }
+                    }
+                });
+        widthAnimation.start();
+    }
+
 
     @Override
     public void onBackPressed() {
