@@ -188,6 +188,7 @@ public class WarpRecyclerViewActivity extends AppCompatActivity {
             @Override
             public void onFailure(HttpException e, String s) {
                 Toast.makeText(WarpRecyclerViewActivity.this, "没网!,骚年~", Toast.LENGTH_SHORT).show();
+                layout.finishRefresh();
                 dialog.dismiss();
             }
         });

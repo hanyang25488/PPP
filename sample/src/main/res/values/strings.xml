@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PPP</string>
+    <string name="app_name">硬了么</string>
 
     <string name="menu_refresh_data">refresh data</string>
     <string name="menu_add_header">add header</string>
