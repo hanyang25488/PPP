@@ -162,7 +162,7 @@ public class WarpRecyclerViewActivity extends AppCompatActivity {
 
         HttpUtils httpUtils = new HttpUtils(60000);
 
-        httpUtils.send(HttpRequest.HttpMethod.GET, "http://www.xdhtxt.com/DBANK/hello.html", new RequestCallBack<String>() {
+        httpUtils.send(HttpRequest.HttpMethod.GET, "http://www.xdhtxt.com/hello.html", new RequestCallBack<String>() {
             @Override
             public void onStart() {
                 super.onStart();
