@@ -181,6 +181,8 @@ public class SpaceImageDetailActivity extends Activity {
         oks.setText("硬了么-分享");
         oks.setUrl(mDatas.IMAGE_URL);
         oks.setImageUrl(mDatas.IMAGE_URL);
+        oks.setTitleUrl(mDatas.IMAGE_URL);
+        oks.setSiteUrl(mDatas.IMAGE_URL);
         // 启动分享GUI
         oks.show(getBaseContext());
     }
