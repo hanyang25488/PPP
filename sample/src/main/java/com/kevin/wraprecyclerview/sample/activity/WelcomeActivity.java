@@ -48,7 +48,7 @@ public class WelcomeActivity extends Activity {
                     startActivity(new Intent(WelcomeActivity.this,WarpRecyclerViewActivity.class));
                 finish();
             }
-        },4000);
+        },6000);
     }
 
 

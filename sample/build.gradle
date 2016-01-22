@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions{
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }
 repositories {
     jcenter()
@@ -37,4 +41,20 @@ dependencies {
     compile 'com.cjj.materialrefeshlayout:library:1.3.0'
     compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
 
+
+    compile files('MobCommons.jar')
+    compile files('MobTools.jar')
+    compile files('ShareSDK-Core-2.6.6.jar')
+    compile files('ShareSDK-Email-2.6.6.jar')
+    compile files('ShareSDK-Facebook-2.6.6.jar')
+    compile files('ShareSDK-QQ-2.6.6.jar')
+    compile files('ShareSDK-QZone-2.6.6.jar')
+    compile files('ShareSDK-ShortMessage-2.6.6.jar')
+    compile files('ShareSDK-SinaWeibo-2.6.6.jar')
+    compile files('ShareSDK-TencentWeibo-2.6.6.jar')
+    compile files('ShareSDK-Twitter-2.6.6.jar')
+    compile files('ShareSDK-Wechat-2.6.6.jar')
+    compile files('ShareSDK-Wechat-Core-2.6.6.jar')
+    compile files('ShareSDK-Wechat-Favorite-2.6.6.jar')
+    compile files('ShareSDK-Wechat-Moments-2.6.6.jar')
 }

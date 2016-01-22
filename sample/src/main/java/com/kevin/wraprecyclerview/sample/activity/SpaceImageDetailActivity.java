@@ -19,6 +19,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.IOException;
 
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+
 
 public class SpaceImageDetailActivity extends Activity {
 
@@ -66,6 +69,12 @@ public class SpaceImageDetailActivity extends Activity {
             @Override
             public void onClick(View v) {
                 set();
+            }
+        });
+        findViewById(R.id.shareText).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showShare();
             }
         });
     }
@@ -164,6 +173,16 @@ public class SpaceImageDetailActivity extends Activity {
             overridePendingTransition(0, 0);
         }
     }
-
+    private void showShare(){
+        ShareSDK.initSDK(getBaseContext());
+        OnekeyShare oks = new OnekeyShare();
+        // 分享时Notification的图标和文字
+//        oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
+        oks.setText("硬了么-分享");
+        oks.setUrl(mDatas.IMAGE_URL);
+        oks.setImageUrl(mDatas.IMAGE_URL);
+        // 启动分享GUI
+        oks.show(getBaseContext());
+    }
 
 }

@@ -24,7 +24,7 @@
         android:layout_marginRight="15dp"
         android:layout_centerInParent="true"
         android:layout_marginBottom="5dp"
-        >
+        android:id="@+id/relativeLayout">
 
         <com.kevin.wraprecyclerview.sample.progressbutton.CircularProgressButton
             android:id="@+id/buttonflat_set"
@@ -41,4 +41,17 @@
             app:textIdle="设为壁纸" />
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/shareText"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:text="分享"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginRight="105dp"
+        android:layout_marginEnd="105dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="357dp" />
 </RelativeLayout>
