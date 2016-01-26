@@ -174,6 +174,7 @@ public class WarpRecyclerViewActivity extends AppCompatActivity {
                 String response = responseInfo.result;
                 pictureData = JsonTool.toBean(response, PictureData.class);
                 allList = (ArrayList<PictureData.Picture>) pictureData.list;
+                    Log.e("P", allList.size()+"");
                 for (int i = 0; i < 10; i++) {
                     list.add(pictureData.list.get(i));
                     Log.e("P", i + "");
@@ -211,7 +212,7 @@ public class WarpRecyclerViewActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Void aVoid) {
                 if (j < allList.size()) {
-                    for (int i = 0; i <= 10; i++) {
+                    for (int i = 0; i < 10; i++) {
                         list.add(allList.get(i + j));
                         Log.e("P", i + j + "");
                         mAdapter.setItemLists(list); // 数据适配器设置数据
@@ -220,7 +221,7 @@ public class WarpRecyclerViewActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(WarpRecyclerViewActivity.this, "到底了!,骚年~", Toast.LENGTH_SHORT).show();
                 }
-                j = j + 11;
+                j = j + 10;
                 layout.finishRefreshLoadMore();
             }
         }.execute();
